@@ -24,7 +24,7 @@ class AccountHeadController extends Controller
      */
     public function create()
     {
-        return view('AccountHeads.create');
+        return view('AccountHeads.create')->render();
     }
 
     /**

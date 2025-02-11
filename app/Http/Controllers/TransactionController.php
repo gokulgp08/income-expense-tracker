@@ -33,12 +33,13 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
+        // dd($request->all());
         try{
         if($request->is_income){
             $creditId = $request->payment_method_id;
-            $debitId = $request->account_head_id;
+            $debitId = $request->account_head;
         }else{
-            $creditId = $request->account_head_id;
+            $creditId = $request->account_head;
             $debitId = $request->payment_method_id;
 
         }

@@ -21,14 +21,16 @@ class TransactionRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->all());
         return [
+        //    echo 1;
             'is_income' => 'required',
-            'account_head_id' => 'required|exists:account_head,id',
+            'account_head' => 'required|exists:account_head,id',
             'payment_method_id' => 'required|exists:account_head,id',
             'amount' => 'required|numeric|min:0',
             'notes' => 'required|string',
             'transaction_date' => 'required',
-            // 'user_id' => 'required|exists:users,id'
+            // 'user_id' => 'required|exists:users,id'-
 
 
         ];
