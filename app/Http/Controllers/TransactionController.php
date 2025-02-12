@@ -19,8 +19,37 @@ class TransactionController extends Controller
         $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])
         ->where('user_id', Auth::user()->id)
         ->get();
-        
-        return view('transactions.index', compact('transactions'));
+
+
+        $credit_Cash = Transaction::whereHas('creditCash', function($query) {
+            $query->where('slug', 'cash');
+        })
+        ->where('user_id',Auth::user()->id)
+        ->sum('amount');
+
+        $debit_Cash = Transaction::whereHas('debitCash', function($query) {
+            $query->where('slug', 'cash');
+        })
+        ->where('user_id',Auth::user()->id)
+        ->sum('amount');
+
+        $cashHand = $credit_Cash - $debit_Cash;
+
+        $credit_Bank = Transaction::whereHas('creditBank', function($query) {
+            $query->where('slug', 'bank');
+        })
+        ->where('user_id',Auth::user()->id)
+        ->sum('amount');
+
+        $debit_Bank = Transaction::whereHas('debitBank', function($query) {
+            $query->where('slug', 'bank');
+        })
+        ->where('user_id',Auth::user()->id)
+        ->sum('amount');
+
+        $cashBank = $credit_Bank - $debit_Bank;
+
+        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank'));
 
     }
 

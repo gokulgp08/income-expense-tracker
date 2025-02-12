@@ -45,4 +45,24 @@ class Transaction extends Model
                     ->whereNotIn('slug', ['cash', 'bank']);
     }
 
+    public function creditCash()
+    {
+        return $this->belongsTo(AccountHead::class, 'credit_id');
+    }
+
+    public function debitCash()
+    {
+        return $this->belongsTo(AccountHead::class, 'debit_id');
+    }
+
+    public function creditBank()
+    {
+        return $this->belongsTo(AccountHead::class, 'credit_id');
+    }
+
+    public function debitBank()
+    {
+        return $this->belongsTo(AccountHead::class, 'debit_id');
+    }
+
 }

@@ -7,7 +7,7 @@
   <div class="card-body">
   
     <div class="gap-2 d-grid d-md-flex justify-content-md-end">
-        <a class="btn btn-primary btn-sm" href="{{ route('AccountHeads.index') }}"><i class="fa fa-arrow-left"></i> Back</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('transactions.create') }}"><i class="fa fa-arrow-left"></i> Back</a>
     </div>
   
     <form action="{{ route('AccountHeads.store') }}" method="POST">

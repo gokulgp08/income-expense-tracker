@@ -40,7 +40,7 @@ class AccountHeadController extends Controller
 
         AccountHead::create($validated);
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.create');
 
 
     }

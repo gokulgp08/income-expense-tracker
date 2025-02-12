@@ -3,7 +3,7 @@
 @section('content')
   
 <div class="mt-5 card">
-  <h2 class="card-header">Account Head Index</h2>
+  <h2 class="card-header">Income and Expense</h2>
   <div class="card-body">
           
         @session('success')
@@ -11,7 +11,7 @@
         @endsession
   
         <div class="gap-2 d-grid d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create New Account Head</a>
+            <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create New</a>
         </div>
   
         <table class="table mt-4 table-bordered table-striped">
@@ -37,6 +37,15 @@
                     <td>{{ $transaction->transaction_date }}</td>
                 </tr>
             @endforeach
+                <tr>
+                    <th>Cash in Hand</th>
+                    <td>{{ $cashHand }}</td>
+                </tr>
+                <tr>
+                    <th>Cash in Bank</th>
+                    <td>{{ $cashBank }}</td>
+                </tr>
+                
             </tbody>
   
         </table>
