@@ -31,8 +31,8 @@ class Transaction extends Model
     public function creditAccountHead()
     {
 
-        return $this->belongsTo(AccountHead::class, 'credit_id', 'id')
-                    ->whereNotIn('slug', ['cash', 'bank']);
+        return $this->belongsTo(AccountHead::class, 'credit_id', 'id');
+                    // ->whereNotIn('slug', ['cash', 'bank']);
     }
 
     /**
@@ -41,8 +41,8 @@ class Transaction extends Model
     public function debitAccountHead()
     {
 
-        return $this->belongsTo(AccountHead::class, 'debit_id', 'id')
-                    ->whereNotIn('slug', ['cash', 'bank']);
+        return $this->belongsTo(AccountHead::class, 'debit_id', 'id');
+                    // ->whereNotIn('slug', ['cash', 'bank']);
     }
 
     public function creditCash()

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class TransactionRequest extends FormRequest
 {
@@ -21,18 +22,26 @@ class TransactionRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->all());
+        // Log::info('reqest');
+        // dd(request()->all());
         return [
-        //    echo 1;
-            'is_income' => 'required',
-            'account_head' => 'required|exists:account_head,id',
-            'payment_method_id' => 'required|exists:account_head,id',
-            'amount' => 'required|numeric|min:0',
-            'notes' => 'required|string',
-            'transaction_date' => 'required',
-            // 'user_id' => 'required|exists:users,id'-
-
-
+            'is_income' => 'required|array',
+            'is_income.*' => 'required|boolean', // Validate each item in the array
+            
+            'account_head' => 'required|array',
+            'account_head.*' => 'required|exists:account_head,id', 
+            
+            'payment_method_id' => 'required|array',
+            'payment_method_id.*' => 'required|exists:account_head,id',
+    
+            'amount' => 'required|array',
+            'amount.*' => 'required|numeric|min:0',
+    
+            'notes' => 'required|array',
+            'notes.*' => 'required|string',
+    
+            'transaction_date' => 'required|date',
         ];
     }
+    
 }

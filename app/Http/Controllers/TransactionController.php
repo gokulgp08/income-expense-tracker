@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -19,6 +20,21 @@ class TransactionController extends Controller
         $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])
         ->where('user_id', Auth::user()->id)
         ->get();
+
+        foreach($transactions as $transaction){
+            if(($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" )){
+                $transaction->method =  $transaction->creditAccountHead->name;
+
+            }elseif(($transaction->debitAccountHead->name== "Bank" || $transaction->debitAccountHead->name== "Cash")){
+                $transaction->method = $transaction->debitAccountHead->name;
+            }else{
+                $transaction->method  = '-';
+            }
+            
+        }
+
+        
+        
 
 
         $credit_Cash = Transaction::whereHas('creditCash', function($query) {
@@ -48,6 +64,7 @@ class TransactionController extends Controller
         ->sum('amount');
 
         $cashBank = $credit_Bank - $debit_Bank;
+        // dd($transactions);
 
         return view('transactions.index', compact('transactions', 'cashHand', 'cashBank'));
 
@@ -67,47 +84,38 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
-        // dd($request->all());
-        try{
-        if($request->is_income){
-            $creditId = $request->payment_method_id;
-            $debitId = $request->account_head;
-        }else{
-            $creditId = $request->account_head;
-            $debitId = $request->payment_method_id;
-
-        }
-        $vochernumer  = rand(1000,999999);
-       $voucher= Voucher::create([
-            'voucher_no' => $vochernumer,
-            'vocher_date' => $request->transaction_date,
-            'user_id' => Auth::user()->id,
-       ]);
-
-       Transaction::create([
-        'voucher_id' => $voucher->id,
-        'credit_id' =>$creditId,
-        'debit_id' => $debitId,
-        'amount' => $request->amount,
-        'notes' => $request->notes,
-        'transaction_date' => $request->transaction_date
-
-       ]);
-       return redirect()->route('transactions.index');
-
-
-       
-    }catch(\Exception $e){
-        return response()->json(['error' => $e->getMessage()], 400);
-
-    }
-        
-
+        try {
+            // Log::info('reqest');
+            
+            $voucherNumber = rand(1000, 999999);
     
-
-
-        
+            $voucher = Voucher::create([
+                'voucher_no' => $voucherNumber,
+                'vocher_date' => $request->transaction_date,
+                'user_id' => Auth::user()->id,
+            ]);
+            foreach ($request->is_income as $index => $isIncome) {
+                $creditId = $isIncome ? $request->payment_method_id[$index] : $request->account_head[$index];
+                $debitId = $isIncome ? $request->account_head[$index] : $request->payment_method_id[$index];
+    
+                
+    
+                Transaction::create([
+                    'voucher_id' => $voucher->id,
+                    'credit_id' => $creditId,
+                    'debit_id' => $debitId,
+                    'amount' => $request->amount[$index],
+                    'notes' => $request->notes[$index],
+                    'transaction_date' => $request->transaction_date,
+                ]);
+            }
+    
+            return redirect()->route('transactions.index')->with('success', 'Transactions saved successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error saving transactions: ' . $e->getMessage());
+        }
     }
+    
 
     /**
      * Display the specified resource.
