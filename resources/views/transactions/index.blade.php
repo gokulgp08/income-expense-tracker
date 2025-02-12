@@ -11,7 +11,7 @@
         @endsession
   
         <div class="gap-2 d-grid d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create New</a>
+            <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create New Account Head</a>
         </div>
   
         <table class="table mt-4 table-bordered table-striped">
@@ -20,7 +20,7 @@
                     <th>Income</th>
                     <th>Expense</th>
                     <th>Amount</th>
-                    <th>Note</th>
+                    <th>Notes</th>
                     <th>Date</th>
                 </tr>
             </thead>
@@ -30,12 +30,13 @@
                 
             @foreach ($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->debitAccountHead->name ??'-' }}</td>
+                    <td>{{ $transaction->debitAccountHead->name ?? '-' }}</td>
                     <td>{{ $transaction->creditAccountHead->name ?? '-' }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->notes }}</td>
                     <td>{{ $transaction->transaction_date }}</td>
                 </tr>
+            @endforeach
             </tbody>
   
         </table>

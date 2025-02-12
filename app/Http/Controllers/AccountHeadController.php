@@ -13,10 +13,10 @@ class AccountHeadController extends Controller
      */
     public function index()
     {
-        $accountHeads = AccountHead::latest()->paginate(5);
+        // $accountHeads = AccountHead::latest()->paginate(5);
           
-        return view('AccountHeads.index', compact('accountHeads'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        // return view('AccountHeads.index', compact('accountHeads'))
+        //             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -40,7 +40,7 @@ class AccountHeadController extends Controller
 
         AccountHead::create($validated);
 
-        return redirect()->route('AccountHeads.index');
+        return redirect()->route('transactions.index');
 
 
     }
@@ -80,7 +80,7 @@ class AccountHeadController extends Controller
     public function accountList(Request $request)
     {
         try{
-            $account= AccountHead::where('user_id',Auth::user()->id)->select('id','name')->get();
+            $account= AccountHead::where('user_id',Auth::user()->id)->wherenotIn('slug',['cash','bank'])->select('id','name')->get();
 
             if(!$account){
                 return response()->json(['status' => false,'message' => ' No account head fetched','data'=>[]],200);

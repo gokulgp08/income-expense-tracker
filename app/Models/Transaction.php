@@ -45,20 +45,4 @@ class Transaction extends Model
                     ->whereNotIn('slug', ['cash', 'bank']);
     }
 
-    public function cashAccountHead()
-    {
-
-        return $this->belongsTo(AccountHead::class, 'credit_id', 'id')
-                    ->where('slug', 'cash');
-    }
-
-    /**
-     * Relationship for the cash account head.
-     */
-    public function bankAccountHead()
-    {
-
-        return $this->belongsTo(AccountHead::class, 'debit_id', 'id')
-                    ->where('slug', 'bank');
-    }
 }

@@ -16,8 +16,10 @@ class TransactionController extends Controller
     public function index()
     {
 
-        $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])->get();
-
+        $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])
+        ->where('user_id', Auth::user()->id)
+        ->get();
+        
         return view('transactions.index', compact('transactions'));
 
     }

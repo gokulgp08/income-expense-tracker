@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         }else{
         $request->session()->regenerate();
        
-        return redirect()->intended(route('AccountHeads.index', absolute: false));
+        return redirect()->intended(route('transactions.index', absolute: false));
         }
     }
 
