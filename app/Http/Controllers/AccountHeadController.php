@@ -13,10 +13,7 @@ class AccountHeadController extends Controller
      */
     public function index()
     {
-        // $accountHeads = AccountHead::latest()->paginate(5);
-          
-        // return view('AccountHeads.index', compact('accountHeads'))
-        //             ->with('i', (request()->input('page', 1) - 1) * 5);
+        //
     }
 
     /**
