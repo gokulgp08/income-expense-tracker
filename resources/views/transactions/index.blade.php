@@ -20,9 +20,10 @@
                     <th>Income</th>
                     <th>Expense</th>
                     <th>Amount</th>
+                    <th>Payment</th>
                     <th>Notes</th>
                     <th>Date</th>
-                    <th>Method</th>
+
                 </tr>
             </thead>
   
@@ -34,9 +35,10 @@
                     <td>{{ ($transaction->debitAccountHead->name== "Bank" || $transaction->debitAccountHead->name== "Cash") ? '-' : $transaction->debitAccountHead->name}}</td>
                     <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash") ? '-' : $transaction->creditAccountHead->name }}</td>
                     <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->method }}</td>
                     <td>{{ $transaction->notes }}</td>
                     <td>{{ $transaction->transaction_date }}</td>
-                    <td>{{ $transaction->method }}</td>
+
 
                     {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
                     
