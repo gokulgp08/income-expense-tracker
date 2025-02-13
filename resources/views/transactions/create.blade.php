@@ -1,4 +1,4 @@
-@extends('transactions.layout')
+@extends('layout')
     
 @section('content')
   

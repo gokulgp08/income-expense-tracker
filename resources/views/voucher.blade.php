@@ -2,8 +2,10 @@
    
 @section('content')
 
+
+
 <div class="mt-5 card">
-  <h2 class="card-header">Transaction History</h2>
+  <h2 class="card-header">Vouchers</h2>
   <div class="card-body">
           
         @session('success')
@@ -13,10 +15,16 @@
         <table class="table mt-4 table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Account Head</th>
-                    <th>Amount</th>
-                    <th> Credit/Debit </th>
-                    <th>Payment</th>
+                    <th rowspan="2">Voucher Number</th>
+                    <th colspan="2" style="text-align: center;">Transfer</th>
+                    {{-- <th>To</th> --}}
+                    <th rowspan="2">Amount</th>
+                    <th rowspan="2">Created By</th>
+                    <th rowspan="2">Created On</th>
+                </tr>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
                 </tr>
             </thead>
   
@@ -25,10 +33,12 @@
                 
             @foreach ($transactions as $transaction)
                 <tr>
-                    <td>{{ $transaction->head }}</td>
+                    <td>{{ $transaction->voucherNumber->voucher_no }}</td>
+                    <td>{{ $transaction->debitAccountHead->name }}</td>
+                    <td>{{ $transaction->creditAccountHead->name }}</td>
                     <td>{{ $transaction->amount }}</td>
-                    <td>{{ $transaction->transfer }}</td>
-                    <td>{{ $transaction->method }}</td>
+                    <td>{{ $transaction->user->name }}</td>
+                    <td>{{ $transaction->transaction_date }}</td>
 
                     {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
                     
@@ -39,7 +49,7 @@
   
         </table>
         
-        {!! $transactions->links() !!}
+        {{-- {!! $transactions->links() !!} --}}
   
   </div>
 </div>  

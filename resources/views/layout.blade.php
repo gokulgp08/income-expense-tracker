@@ -10,6 +10,16 @@
 </head>
 <body>
     <div class="container">
+
+        <div style="display: flex; padding: 10px;">
+            <a href="{{ route('transactions.index') }}" style="padding: 10px;">Dashboard</a>
+            <a href="{{route('history')}}" style="padding: 10px;">History</a>
+            <a href="{{route('ledger')}}"style="padding: 10px;">Ledger</a>
+            <a href="{{route('voucher')}}" style="padding: 10px;">Voucher</a>
+        
+        </div>
+
+        
         @yield('content')
     </div>
 </body>

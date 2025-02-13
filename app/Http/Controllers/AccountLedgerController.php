@@ -15,7 +15,6 @@ class AccountLedgerController extends Controller
     public function index()
     {
         $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead','voucherNumber'])
-        ->where('user_id', Auth::user()->id)
         ->get();
 
         foreach($transactions as $transaction){
@@ -31,7 +30,7 @@ class AccountLedgerController extends Controller
             
         }
 
-        $accountHeads = AccountHead::where('user_id',Auth::user()->id)->wherenotIn('slug',['cash','bank'])->select('id','name')->get();
+        $accountHeads = AccountHead::wherenotIn('slug',['cash','bank'])->select('id','name')->get();
 
         
 
@@ -88,7 +87,7 @@ class AccountLedgerController extends Controller
 
     public function filter(Request $request)
     {
-        $query = Transaction::where('user_id', Auth::user()->id);
+        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber']);
     
         if ($request->filled('account_head')) {
             $accountHeadId = $request->account_head;
@@ -124,8 +123,7 @@ class AccountLedgerController extends Controller
             
         }
     
-        $accountHeads = AccountHead::where('user_id', Auth::user()->id)
-            ->whereNotIn('slug', ['cash','bank'])
+        $accountHeads = AccountHead::whereNotIn('slug', ['cash','bank'])
             ->select('id', 'name')
             ->get();
     

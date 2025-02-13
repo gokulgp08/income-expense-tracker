@@ -5,6 +5,7 @@ use App\Http\Controllers\AccountLedgerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionHistoryController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,8 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment-method', [AccountHeadController::class, 'paymentMethod'])->name('paymentMethod');
     Route::get('/history', [TransactionHistoryController::class, 'index'])->name('history');
     Route::get('/ledger', [AccountLedgerController::class, 'index'])->name('ledger');
-    Route::get('/filter', [AccountLedgerController::class, 'filter'])
-    ->name('transactions.filter');
+    Route::get('/filter', [AccountLedgerController::class, 'filter'])->name('transactions.filter');
+    Route::get('/voucher', [VoucherController::class, 'index'])->name('voucher');
+    Route::get('/voucherfilter/{voucher_id}', [VoucherController::class, 'voucherfilter'])->name('voucherfilter');
 
     
 
