@@ -115,6 +115,28 @@ class TransactionController extends Controller
             return back()->with('error', 'Error saving transactions: ' . $e->getMessage());
         }
     }
+
+    // public function history(){
+
+    //     $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])
+    //     ->where('user_id', Auth::user()->id)
+    //     ->get();
+
+    //     foreach($transactions as $transaction){
+    //         if(($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" )){
+    //             $transaction->method =  $transaction->creditAccountHead->name;
+
+    //         }elseif(($transaction->debitAccountHead->name== "Bank" || $transaction->debitAccountHead->name== "Cash")){
+    //             $transaction->method = $transaction->debitAccountHead->name;
+    //         }else{
+    //             $transaction->method  = '-';
+    //         }
+            
+    //     }
+
+    //     return view('transactions.history', compact('transactions'));
+
+    // }
     
 
     /**

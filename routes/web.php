@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountHeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionHistoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('transactions', TransactionController::class);
     Route::get('/account-head', [AccountHeadController::class, 'accountList'])->name('accountList');
     Route::get('/payment-method', [AccountHeadController::class, 'paymentMethod'])->name('paymentMethod');
+    Route::get('/history', [TransactionHistoryController::class, 'index'])->name('history');
+
     
 
 });
