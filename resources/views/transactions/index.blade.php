@@ -5,6 +5,7 @@
 <div style="display: flex; padding: 10px;">
     <a href="transactions" style="padding: 10px;">Dashboard</a>
     <a href="history" style="padding: 10px;">History</a>
+    <a href="ledger" style="padding: 10px;">Ledger</a>
 </div>
 
 <div class="mt-5 card">
@@ -26,7 +27,6 @@
                     <th>Expense</th>
                     <th>Amount</th>
                     <th>Payment</th>
-                    <th>Notes</th>
                     <th>Date</th>
 
                 </tr>
@@ -41,7 +41,6 @@
                     <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash") ? '-' : $transaction->creditAccountHead->name }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->method }}</td>
-                    <td>{{ $transaction->notes }}</td>
                     <td>{{ $transaction->transaction_date }}</td>
 
 

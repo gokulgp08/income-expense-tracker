@@ -5,6 +5,7 @@
 <div style="display: flex; padding: 10px;">
     <a href="transactions" style="padding: 10px;">Dashboard</a>
     <a href="history" style="padding: 10px;">History</a>
+    <a href="ledger" style="padding: 10px;">Ledger</a>
 </div>
 
 <div class="mt-5 card">

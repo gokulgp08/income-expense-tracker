@@ -154,8 +154,6 @@
             // Set the default selection for the duplicated entry.
             // If you want to default to Expense (value "0") change to:
             newEntry.find("input[type='radio'][value='0']").prop("checked", true);
-            // If you want Income as default, use:
-            // newEntry.find("input[type='radio'][value='1']").prop("checked", true);
   
             // Append the new entry
             $(".transaction-entries").append(newEntry);

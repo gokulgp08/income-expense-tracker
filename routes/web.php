@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountHeadController;
+use App\Http\Controllers\AccountLedgerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionHistoryController;
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/account-head', [AccountHeadController::class, 'accountList'])->name('accountList');
     Route::get('/payment-method', [AccountHeadController::class, 'paymentMethod'])->name('paymentMethod');
     Route::get('/history', [TransactionHistoryController::class, 'index'])->name('history');
+    Route::get('/ledger', [AccountLedgerController::class, 'index'])->name('ledger');
+    Route::get('/filter', [AccountLedgerController::class, 'filter'])
+    ->name('transactions.filter');
 
     
 

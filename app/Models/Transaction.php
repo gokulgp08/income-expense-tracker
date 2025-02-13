@@ -65,4 +65,12 @@ class Transaction extends Model
         return $this->belongsTo(AccountHead::class, 'debit_id');
     }
 
+    
+    public function voucherNumber()
+    {
+
+        return $this->belongsTo(Voucher::class, 'voucher_id', 'id');
+                    // ->whereNotIn('slug', ['cash', 'bank']);
+    }
+
 }
