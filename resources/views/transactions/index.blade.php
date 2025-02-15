@@ -28,17 +28,17 @@
                 <tbody>
 
 
-                        <tr>
-                            <td>{{ $total_income }}</td>
-                            <td>{{ $total_expense }}</td>
-                        </tr>
-                    <tr rowspan="2">
-                        <th >Cash in Hand</th>
-                        <th >Cash in Bank</th>
-                       
+                    <tr>
+                        <td>{{ $total_income }}</td>
+                        <td>{{ $total_expense }}</td>
                     </tr>
                     <tr rowspan="2">
-                        
+                        <th>Cash in Hand</th>
+                        <th>Cash in Bank</th>
+
+                    </tr>
+                    <tr rowspan="2">
+
                         <td>{{ $cashHand }}</td>
                         <td>{{ $cashBank }}</td>
                     </tr>
@@ -50,6 +50,7 @@
 
         </div>
     </div>
+    {{-- <pre>{{ $chartData }}</pre> --}}
     <div id="piechart" style="width: 900px; height: 500px;"></div>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -59,23 +60,18 @@
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-
             var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
+                ['Category', 'Amount'],
+                @php echo $chartData @endphp
             ]);
 
             var options = {
-                title: 'My Daily Activities'
+                title: 'Income and Expense Distribution'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
             chart.draw(data, options);
         }
     </script>
+
 @endsection

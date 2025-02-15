@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
+use App\Models\AccountHead;
 use App\Models\Transaction;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -98,7 +99,28 @@ class TransactionController extends Controller
         $cashBank = $credit_Bank - $debit_Bank;
           // dd($transactions);
 
-        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank', 'total_income', 'total_expense'));
+        $results = AccountHead::select('account_head.name as names')
+          ->selectRaw('SUM(transactions.amount) as total_amount')
+          ->join('transactions', function($join) {
+              $join->on('transactions.credit_id', '=', 'account_head.id')
+                   ->orOn('transactions.debit_id', '=', 'account_head.id');
+            })
+          ->where('account_head.name', '!=', 'Cash')
+          ->where('account_head.name', '!=', 'Bank')
+          ->groupBy('account_head.name')
+          ->get();
+        
+        // dd($results);
+        $chartData = "";
+
+        foreach ($results as $result) {
+
+            $chartData .= "['" . addslashes($result->names) . "', " . $result->total_amount . "],";
+        }
+
+        $chartData = rtrim($chartData, ",") ;
+
+        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank', 'total_income', 'total_expense', 'chartData'));
     }
 
       /**
