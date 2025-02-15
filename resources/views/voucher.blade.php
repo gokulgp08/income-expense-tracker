@@ -23,8 +23,8 @@
                     <th rowspan="2">Created On</th>
                 </tr>
                 <tr>
-                    <th>From</th>
-                    <th>To</th>
+                    <th>Debited From</th>
+                    <th>Credited To</th>
                 </tr>
             </thead>
   

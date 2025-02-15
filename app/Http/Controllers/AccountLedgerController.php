@@ -15,6 +15,7 @@ class AccountLedgerController extends Controller
     public function index()
     {
         $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead','voucherNumber'])
+        ->where('user_id', Auth::user()->id)
         ->get();
 
         foreach($transactions as $transaction){
@@ -30,7 +31,9 @@ class AccountLedgerController extends Controller
             
         }
 
-        $accountHeads = AccountHead::wherenotIn('slug',['cash','bank'])->select('id','name')->get();
+        $accountHeads = AccountHead::wherenotIn('slug',['cash','bank'])->select('id','name')
+        ->where('user_id', Auth::user()->id)
+        ->get();
 
         
 
@@ -87,7 +90,8 @@ class AccountLedgerController extends Controller
 
     public function filter(Request $request)
     {
-        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber']);
+        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber'])
+        ->where('user_id', Auth::user()->id);
     
         if ($request->filled('account_head')) {
             $accountHeadId = $request->account_head;
@@ -125,6 +129,7 @@ class AccountLedgerController extends Controller
     
         $accountHeads = AccountHead::whereNotIn('slug', ['cash','bank'])
             ->select('id', 'name')
+            ->where('user_id', Auth::user()->id)
             ->get();
     
         return view('ledger', compact('transactions', 'accountHeads'));

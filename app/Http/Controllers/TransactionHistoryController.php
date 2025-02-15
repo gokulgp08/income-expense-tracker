@@ -13,7 +13,7 @@ class TransactionHistoryController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead'])
+        $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber'])
         ->where('user_id', Auth::user()->id)
         ->latest()->paginate(100);
 
@@ -32,15 +32,23 @@ class TransactionHistoryController extends Controller
         foreach($transactions as $transaction){
             if(($transaction->creditAccountHead->name == "Bank" || $transaction->creditAccountHead->name == "Cash" )){
                 $transaction->head =  $transaction->debitAccountHead->name;
-                $transaction->transfer = 'Credited';
+                $transaction->transfer = 'Income';
 
             }elseif(($transaction->debitAccountHead->name == "Bank" || $transaction->debitAccountHead->name == "Cash")){
                 $transaction->head = $transaction->creditAccountHead->name;
-                $transaction->transfer = 'Debited';
+                $transaction->transfer = 'Expense';
             }else{
                 $transaction->head  = '-';
             }
             
+        }
+
+        foreach($transactions as $transaction){
+            if($transaction->voucherNumber->status == 1){
+                $transaction->status = 'Active';
+            }else{
+                $transaction->status = 'Cancelled';
+            }
         }
 
         return view('history', compact('transactions'))

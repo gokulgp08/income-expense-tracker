@@ -1,64 +1,81 @@
 @extends('layout')
-   
+
 @section('content')
 
 
-<div class="mt-5 card">
-  <h2 class="card-header">Income and Expense</h2>
-  <div class="card-body">
-          
-        @session('success')
-            <div class="alert alert-success" role="alert"> {{ $value }} </div>
-        @endsession
-  
-        <div class="gap-2 d-grid d-md-flex justify-content-md-end">
-            <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create New</a>
+    <div class="mt-5 card">
+        <h2 class="card-header">Income and Expense</h2>
+        <div class="card-body">
+
+            @session('success')
+                <div class="alert alert-success" role="alert"> {{ $value }} </div>
+            @endsession
+
+            <div class="gap-2 d-grid d-md-flex justify-content-md-end">
+                <a class="btn btn-success btn-sm" href="{{ route('transactions.create') }}"> <i class="fa fa-plus"></i> Create
+                    New</a>
+            </div>
+
+            <table class="table mt-4 table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Income</th>
+                        <th colspan="2">Expense</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+                        <tr>
+                            <td>{{ $total_income }}</td>
+                            <td>{{ $total_expense }}</td>
+                        </tr>
+                    <tr rowspan="2">
+                        <th >Cash in Hand</th>
+                        <th >Cash in Bank</th>
+                       
+                    </tr>
+                    <tr rowspan="2">
+                        
+                        <td>{{ $cashHand }}</td>
+                        <td>{{ $cashBank }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
         </div>
-  
-        <table class="table mt-4 table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Income</th>
-                    <th>Expense</th>
-                    <th>Amount</th>
-                    <th>Payment</th>
-                    <th>Date</th>
+    </div>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
 
-                </tr>
-            </thead>
-  
-            <tbody>
+        function drawChart() {
 
-                
-            @foreach ($transactions as $transaction)
-                <tr>
-                    <td>{{ ($transaction->debitAccountHead->name== "Bank" || $transaction->debitAccountHead->name== "Cash") ? '-' : $transaction->debitAccountHead->name}}</td>
-                    <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash") ? '-' : $transaction->creditAccountHead->name }}</td>
-                    <td>{{ $transaction->amount }}</td>
-                    <td>{{ $transaction->method }}</td>
-                    <td>{{ $transaction->transaction_date }}</td>
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work', 11],
+                ['Eat', 2],
+                ['Commute', 2],
+                ['Watch TV', 2],
+                ['Sleep', 7]
+            ]);
 
+            var options = {
+                title: 'My Daily Activities'
+            };
 
-                    {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
-                    
-                    {{-- dd($transaction) --}}
-                </tr>
-            @endforeach
-                <tr>
-                    <th>Cash in Hand</th>
-                    <td>{{ $cashHand }}</td>
-                </tr>
-                <tr>
-                    <th>Cash in Bank</th>
-                    <td>{{ $cashBank }}</td>
-                </tr>
-                
-            </tbody>
-  
-        </table>
-        
-        {{-- {!! $accountHeads->links() !!} --}}
-  
-  </div>
-</div>  
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
 @endsection

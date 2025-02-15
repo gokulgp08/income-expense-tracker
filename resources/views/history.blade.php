@@ -14,9 +14,10 @@
             <thead>
                 <tr>
                     <th>Account Head</th>
+                    <th> Income/Expense </th>
+                    <th>Payment/Receipt</th>
                     <th>Amount</th>
-                    <th> Credit/Debit </th>
-                    <th>Payment</th>
+                    <th>Status</th>
                 </tr>
             </thead>
   
@@ -26,9 +27,11 @@
             @foreach ($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->head }}</td>
-                    <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->transfer }}</td>
                     <td>{{ $transaction->method }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->status }}</td>
+
 
                     {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
                     

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AccountHeadController;
 use App\Http\Controllers\AccountLedgerController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\MonthlyReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionHistoryController;
@@ -29,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/filter', [AccountLedgerController::class, 'filter'])->name('transactions.filter');
     Route::get('/voucher', [VoucherController::class, 'index'])->name('voucher');
     Route::get('/voucherfilter/{voucher_id}', [VoucherController::class, 'voucherfilter'])->name('voucherfilter');
+    Route::get('/report', [MonthlyReportController::class, 'index'])->name('report');
+    Route::get('/reportfilter',[MonthlyReportController::class, 'reportfilter'])->name('reportfilter');
+    Route::get('/charts',[ChartController::class, 'index'])->name('charts');
+
 
     
 

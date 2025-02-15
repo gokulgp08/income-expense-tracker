@@ -61,12 +61,12 @@
             <table class="table mt-4 table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>Date</th>
+                        <th>Voucher</th>
+                        <th>Notes</th>
                         <th>Account Head</th>
                         <th>Credit</th>
                         <th>Debit</th>
-                        <th>Voucher</th>
-                        <th>Notes</th>
-                        <th>Date</th>
                     </tr>
                 </thead>
 
@@ -75,16 +75,16 @@
 
                     @foreach ($transactions as $transaction)
                         <tr>
+                            <td>{{ $transaction->transaction_date }}</td>
+                            <td><a
+                                    href="{{ route('voucherfilter', ['voucher_id' => $transaction->voucher_id]) }}">{{ $transaction->voucherNumber->voucher_no }}</a>
+                            </td>
+                            <td>{{ $transaction->notes }}</td>
                             <td>{{ $transaction->head }}</td>
                             <td>{{ $transaction->debitAccountHead->name == 'Bank' || $transaction->debitAccountHead->name == 'Cash' ? '-' : $transaction->amount }}
                             </td>
                             <td>{{ $transaction->creditAccountHead->name == 'Bank' || $transaction->creditAccountHead->name == 'Cash' ? '-' : $transaction->amount }}
                             </td>
-                            <td><a
-                                    href="{{ route('voucherfilter', ['voucher_id' => $transaction->voucher_id]) }}">{{ $transaction->voucherNumber->voucher_no }}</a>
-                            </td>
-                            <td>{{ $transaction->notes }}</td>
-                            <td>{{ $transaction->transaction_date }}</td>
 
                             {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
 

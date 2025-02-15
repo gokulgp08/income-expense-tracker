@@ -16,6 +16,8 @@
             <a href="{{route('history')}}" style="padding: 10px;">History</a>
             <a href="{{route('ledger')}}"style="padding: 10px;">Ledger</a>
             <a href="{{route('voucher')}}" style="padding: 10px;">Voucher</a>
+            <a href="{{route('report')}}" style="padding: 10px;">Report</a>
+
         
         </div>
 

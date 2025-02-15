@@ -32,7 +32,6 @@ class Transaction extends Model
     {
 
         return $this->belongsTo(AccountHead::class, 'credit_id', 'id');
-                    // ->whereNotIn('slug', ['cash', 'bank']);
     }
 
     /**
@@ -42,7 +41,6 @@ class Transaction extends Model
     {
 
         return $this->belongsTo(AccountHead::class, 'debit_id', 'id');
-                    // ->whereNotIn('slug', ['cash', 'bank']);
     }
 
     public function creditCash()

@@ -6,6 +6,7 @@ use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -31,8 +32,41 @@ class TransactionController extends Controller
             }
         }
 
+        $creditedcash = Transaction::whereHas('creditCash', function ($query) {
+            $query->where('slug', 'cash');
+        })
+            ->whereYear('transaction_date', Carbon::now()->year)
+            ->whereMonth('transaction_date', Carbon::now()->month)
+            ->where('user_id', Auth::user()->id)
+            ->sum('amount');
 
+        $debitedcash = Transaction::whereHas('debitCash', function ($query) {
+            $query->where('slug', 'cash');
+        })
+            ->whereYear('transaction_date', Carbon::now()->year)
+            ->whereMonth('transaction_date', Carbon::now()->month)
+            ->where('user_id', Auth::user()->id)
+            ->sum('amount');
+            
+        $creditedBank = Transaction::whereHas('creditBank', function ($query) {
+            $query->where('slug', 'bank');
+        })
+            ->whereYear('transaction_date', Carbon::now()->year)
+            ->whereMonth('transaction_date', Carbon::now()->month)
+            ->where('user_id', Auth::user()->id)
+            ->sum('amount');
+        
+        $debitedBank = Transaction::whereHas('debitBank', function ($query) {
+            $query->where('slug', 'bank');
+        })
+            ->whereYear('transaction_date', Carbon::now()->year)
+            ->whereMonth('transaction_date', Carbon::now()->month)
+            ->where('user_id', Auth::user()->id)
+            ->sum('amount');
 
+        $total_income = $creditedcash + $creditedBank;
+        
+        $total_expense = $debitedcash + $debitedBank;
 
 
         $credit_Cash = Transaction::whereHas('creditCash', function ($query) {
@@ -64,7 +98,7 @@ class TransactionController extends Controller
         $cashBank = $credit_Bank - $debit_Bank;
           // dd($transactions);
 
-        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank'));
+        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank', 'total_income', 'total_expense'));
     }
 
       /**
