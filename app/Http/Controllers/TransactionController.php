@@ -105,6 +105,7 @@ class TransactionController extends Controller
               $join->on('transactions.credit_id', '=', 'account_head.id')
                    ->orOn('transactions.debit_id', '=', 'account_head.id');
             })
+          ->where('transactions.user_id', '=',Auth::user()->id)
           ->where('account_head.name', '!=', 'Cash')
           ->where('account_head.name', '!=', 'Bank')
           ->groupBy('account_head.name')
