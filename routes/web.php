@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/reportfilter',[MonthlyReportController::class, 'reportfilter'])->name('reportfilter');
     Route::get('reports/download/pdf', [MonthlyReportController::class, 'downloadPdf'])->name('report.pdf');
     Route::get('reports/download/excel', [MonthlyReportController::class, 'downloadExcel'])->name('report.excel');
+    Route::get('ledger/download/pdf', [AccountLedgerController::class, 'downloadPdf'])->name('ledger.pdf');
+    Route::get('ledger/download/excel', [AccountLedgerController::class, 'downloadExcel'])->name('ledger.excel');
 
 
     

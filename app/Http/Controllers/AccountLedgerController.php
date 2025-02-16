@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransactionledgerExport;
+use App\Exports\TransactionsExport;
 use App\Models\transaction;
 use App\Models\AccountHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AccountLedgerController extends Controller
 {
@@ -133,6 +137,67 @@ class AccountLedgerController extends Controller
             ->get();
     
         return view('ledger', compact('transactions', 'accountHeads'));
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        // Fetch filtered transactions based on filters
+        $transactions = $this->getFilteredTransactions($request);
+
+        // Generate PDF
+        $pdf = Pdf::loadView('ledger_pdf', compact('transactions'));
+        return $pdf->download('Ledger_Report.pdf');
+    }
+
+    public function downloadExcel(Request $request)
+    {
+        // Fetch filtered transactions
+        $transactions = $this->getFilteredTransactions($request);
+
+        return Excel::download(new TransactionledgerExport($transactions), 'Ledger_Report.xlsx');
+    }
+
+    private function getFilteredTransactions(Request $request){
+
+        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber'])
+        ->where('user_id', Auth::user()->id);
+    
+        if ($request->filled('account_head')) {
+            $accountHeadId = $request->account_head;
+
+            $query->where(function ($q) use ($accountHeadId) {
+                $q->where('credit_id', $accountHeadId)
+                  ->orWhere('debit_id', $accountHeadId);
+            });
+        }
+    
+        if ($request->filled('from_date')) {
+            $query->whereDate('transaction_date', '>=', $request->from_date);
+        }
+    
+        if ($request->filled('to_date')) {
+            $query->whereDate('transaction_date', '<=', $request->to_date);
+        }
+    
+        $query->orderBy('transaction_date', 'desc');
+    
+        $transactions = $query->get();
+
+        foreach($transactions as $transaction){
+
+            if(($transaction->creditAccountHead->name == "Bank" || $transaction->creditAccountHead->name == "Cash" )){
+                $transaction->head =  $transaction->debitAccountHead->name;
+
+            }elseif(($transaction->debitAccountHead->name == "Bank" || $transaction->debitAccountHead->name == "Cash")){
+                $transaction->head = $transaction->creditAccountHead->name;
+            }else{
+                $transaction->head  = '-';
+            }
+            
+        }
+
+        return $transactions;
+
     }
     
 }

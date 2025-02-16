@@ -11,6 +11,8 @@
 
             <!-- Example Filtering Form (placed at the top of your view) -->
             <form method="GET" action="{{ route('transactions.filter') }}" class="mb-4">
+                <a href="{{ route('ledger.pdf', request()->query()) }}" class="btn btn-danger" style= "width: 120px; text-align: center;">Download as PDF</a>
+                <a href="{{ route('ledger.excel', request()->query()) }}" class="btn btn-success" style= "width: 120px; text-align: center;">Download as Excel</a>
                 <div class="row">
                     <!-- Account Head Dropdown -->
                     <div class="col-md-4">
@@ -85,10 +87,6 @@
                             </td>
                             <td>{{ $transaction->creditAccountHead->name == 'Bank' || $transaction->creditAccountHead->name == 'Cash' ? '-' : $transaction->amount }}
                             </td>
-
-                            {{-- <td>{{($transaction->creditAccountHead->name== "Bank" || $transaction->creditAccountHead->name== "Cash" ) ?  $transaction->creditAccountHead->name:'-' }}</td> --}}
-
-                            {{-- dd($transaction) --}}
                         </tr>
                     @endforeach
                 </tbody>
