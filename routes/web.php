@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/voucherfilter/{voucher_id}', [VoucherController::class, 'voucherfilter'])->name('voucherfilter');
     Route::get('/report', [MonthlyReportController::class, 'index'])->name('report');
     Route::get('/reportfilter',[MonthlyReportController::class, 'reportfilter'])->name('reportfilter');
-    Route::get('/charts',[ChartController::class, 'index'])->name('charts');
+    Route::get('reports/download/pdf', [MonthlyReportController::class, 'downloadPdf'])->name('report.pdf');
+    Route::get('reports/download/excel', [MonthlyReportController::class, 'downloadExcel'])->name('report.excel');
 
 
     
