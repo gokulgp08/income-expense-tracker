@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\AccountHeads\Controllers;
 
-use App\Models\AccountHead;
+use App\Modules\AccountHeads\Models\AccountHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class AccountHeadController extends Controller
 {
@@ -21,7 +22,7 @@ class AccountHeadController extends Controller
      */
     public function create()
     {
-        return view('AccountHeads.create')->render();
+        return view('AccountHeads::AccountHeads.create')->render();
     }
 
     /**

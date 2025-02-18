@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\AccountHead;
+use App\Modules\AccountHeads\Models\AccountHead;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
@@ -67,6 +67,6 @@ class RegisteredUserController extends Controller
             ],
         ]);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('transactions.index', absolute: false));
     }
 }

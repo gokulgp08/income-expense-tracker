@@ -16,6 +16,6 @@ class TransactionledgerExport implements FromView
 
     public function view(): View
     {
-        return view('ledger_excel', ['transactions' => $this->transactions]);
+        return view('Transactions::ledger_excel', ['transactions' => $this->transactions]);
     }
 }

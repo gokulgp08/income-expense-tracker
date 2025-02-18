@@ -9,9 +9,9 @@
         <div class="card-body">
 
             <!-- Example Filtering Form (placed at the top of your view) -->
-            <form method="GET" action="{{ route('reportfilter') }}" class="mb-4">
-                <a href="{{ route('report.pdf', request()->query()) }}" class="btn btn-danger" style= "width: 120px; text-align: center;">Download as PDF</a>
-                <a href="{{ route('report.excel', request()->query()) }}" class="btn btn-success" style= "width: 120px; text-align: center;">Download as Excel</a>
+            <form method="GET" action="{{ route('reports.filter') }}" class="mb-4">
+                <a href="{{ route('reports.pdf', request()->query()) }}" class="btn btn-danger" style= "width: 120px; text-align: center;">Download as PDF</a>
+                <a href="{{ route('reports.excel', request()->query()) }}" class="btn btn-success" style= "width: 120px; text-align: center;">Download as Excel</a>
                 <div class="row">
 
                     <!-- Account Head Dropdown -->

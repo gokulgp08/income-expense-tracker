@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Transactions\Controllers;
 
-use App\Models\transaction;
+use App\Modules\Transactions\Models\transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 
 class TransactionHistoryController extends Controller
 {
@@ -51,7 +53,7 @@ class TransactionHistoryController extends Controller
             }
         }
 
-        return view('history', compact('transactions'))
+        return view('Transactions::history', compact('transactions'))
                     ->with('i', (request()->input('page', 1) - 1) * 100);
     }
 

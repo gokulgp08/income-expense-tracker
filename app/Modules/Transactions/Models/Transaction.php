@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Modules\Transactions\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Modules\AccountHeads\Models\AccountHead;
+use App\Modules\Vouchers\Models\Voucher;
 
 
 

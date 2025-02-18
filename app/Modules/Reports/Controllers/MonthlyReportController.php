@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Reports\Controllers;
 
 use App\Exports\TransactionsExport;
-use App\Models\AccountHead;
-use App\Models\transaction;
+use App\Modules\AccountHeads\Models\AccountHead;
+use App\Modules\Transactions\Models\transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
+
 
 class MonthlyReportController extends Controller
 {
@@ -71,7 +73,7 @@ class MonthlyReportController extends Controller
             ->where('user_id', Auth::user()->id)
             ->get();
 
-        return view('report', compact('transactions', 'accountHeads'));
+        return view('Reports::report', compact('transactions', 'accountHeads'));
     }
 
     /**
@@ -125,7 +127,8 @@ class MonthlyReportController extends Controller
     public function reportfilter(Request $request)
     {
         // dd(request()->all());
-        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber'])->where('user_id', Auth::user()->id);
+        $query = Transaction::with(['creditAccountHead', 'debitAccountHead', 'voucherNumber'])
+        ->where('user_id', Auth::user()->id);
 
         if ($request->filled('account_head')) {
 
@@ -210,7 +213,7 @@ class MonthlyReportController extends Controller
         }
 
 
-        return view('report', compact('transactions'));
+        return view('Reports::report', compact('transactions'));
     }
 
     public function downloadPdf(Request $request)
@@ -219,7 +222,7 @@ class MonthlyReportController extends Controller
         $transactions = $this->getFilteredTransactions($request);
 
         // Generate PDF
-        $pdf = Pdf::loadView('report_pdf', compact('transactions'));
+        $pdf = Pdf::loadView('Reports::report_pdf', compact('transactions'));
         return $pdf->download('Monthly_Report.pdf');
     }
 

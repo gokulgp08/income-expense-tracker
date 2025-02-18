@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Transactions\Controllers;
 
 use App\Http\Requests\TransactionRequest;
-use App\Models\AccountHead;
-use App\Models\Transaction;
-use App\Models\Voucher;
+use App\Modules\AccountHeads\Models\AccountHead;
+use App\Modules\Transactions\Models\Transaction;
+use App\Modules\Vouchers\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class TransactionController extends Controller
 {
@@ -121,7 +121,7 @@ class TransactionController extends Controller
 
         $chartData = rtrim($chartData, ",") ;
 
-        return view('transactions.index', compact('transactions', 'cashHand', 'cashBank', 'total_income', 'total_expense', 'chartData'));
+        return view('Transactions::transactions.index', compact('transactions', 'cashHand', 'cashBank', 'total_income', 'total_expense', 'chartData'));
     }
 
       /**
@@ -129,7 +129,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('transactions.create');
+        return view('Transactions::transactions.create');
     }
 
       /**

@@ -79,7 +79,7 @@
                         <tr>
                             <td>{{ $transaction->transaction_date }}</td>
                             <td><a
-                                    href="{{ route('voucherfilter', ['voucher_id' => $transaction->voucher_id]) }}">{{ $transaction->voucherNumber->voucher_no }}</a>
+                                    href="{{ route('vouchers.filter', ['voucher_id' => $transaction->voucher_id]) }}">{{ $transaction->voucherNumber->voucher_no }}</a>
                             </td>
                             <td>{{ $transaction->notes }}</td>
                             <td>{{ $transaction->head }}</td>

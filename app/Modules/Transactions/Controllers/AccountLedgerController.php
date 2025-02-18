@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Transactions\Controllers;
 
 use App\Exports\TransactionledgerExport;
 use App\Exports\TransactionsExport;
-use App\Models\transaction;
-use App\Models\AccountHead;
+use App\Modules\Transactions\Models\transaction;
+use App\Modules\AccountHeads\Models\AccountHead;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
+
 
 class AccountLedgerController extends Controller
 {
@@ -41,7 +43,7 @@ class AccountLedgerController extends Controller
 
         
 
-        return view('ledger', compact('transactions','accountHeads'));
+        return view('Transactions::ledger', compact('transactions','accountHeads'));
     }
 
     /**
@@ -136,7 +138,7 @@ class AccountLedgerController extends Controller
             ->where('user_id', Auth::user()->id)
             ->get();
     
-        return view('ledger', compact('transactions', 'accountHeads'));
+        return view('Transactions::ledger', compact('transactions', 'accountHeads'));
     }
 
     public function downloadPdf(Request $request)
@@ -145,7 +147,7 @@ class AccountLedgerController extends Controller
         $transactions = $this->getFilteredTransactions($request);
 
         // Generate PDF
-        $pdf = Pdf::loadView('ledger_pdf', compact('transactions'));
+        $pdf = Pdf::loadView('Transactions::ledger_pdf', compact('transactions'));
         return $pdf->download('Ledger_Report.pdf');
     }
 

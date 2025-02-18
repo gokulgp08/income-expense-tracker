@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Vouchers\Controllers;
 
-use App\Models\Voucher;
-use App\Models\transaction;
+use App\Modules\Vouchers\Models\Voucher;
+use App\Modules\Transactions\Models\transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+
 
 class VoucherController extends Controller
 {
@@ -16,7 +18,7 @@ class VoucherController extends Controller
     {
         $transactions = Transaction::with(['creditAccountHead', 'debitAccountHead','voucherNumber','user'])->get();
 
-        return view('voucher', compact('transactions'));
+        return view('Vouchers::voucher', compact('transactions'));
     }
 
     /**
@@ -81,7 +83,7 @@ class VoucherController extends Controller
 
         $transactions = $query->get();
 
-        return view('voucher', compact('transactions'));
+        return view('Vouchers::voucher', compact('transactions'));
 
 
 
